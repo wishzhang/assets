@@ -24,22 +24,23 @@ jobs:
           path: ./package.json
           property: version
 
-      - uses: ClementTsang/delete-tag-and-release@v0.3.1
-        with:
-          delete_release: true # default: false
-          tag_name: v0.1.0 # tag name to delete
-          repo: wishzhang/assets # target repo (optional). defaults to repo running this action
-        env:
-          GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+    - name: 3. 删除tag和release
+        uses: ClementTsang/delete-tag-and-release@v0.3.1
+          with:
+            delete_release: true # default: false
+            tag_name: v0.1.0 # tag name to delete
+            repo: wishzhang/assets # target repo (optional). defaults to repo running this action
+          env:
+            GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
 
-      - name: 3. 创建GitHub Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
-        with:
-          tag_name: v${{steps.version.outputs.value}}
-          release_name: v${{steps.version.outputs.value}}
-          body: ${{steps.description.outputs.content}}
-          draft: false
-          prerelease: false
+        - name: 4. 创建GitHub Release
+          id: create_release
+          uses: actions/create-release@latest
+          env:
+            GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          with:
+            tag_name: v${{steps.version.outputs.value}}
+            release_name: v${{steps.version.outputs.value}}
+            body: ${{steps.description.outputs.content}}
+            draft: false
+            prerelease: false

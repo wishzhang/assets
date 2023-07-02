@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish-npm:
+  auto-release:
     runs-on: ubuntu-latest
     strategy:
       matrix:
